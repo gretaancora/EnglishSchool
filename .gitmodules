@@ -1,0 +1,3 @@
+[submodule "clientBD"]
+	path = clientBD
+	url = https://github.com/gretaancora/clientBD.git
