@@ -8,10 +8,10 @@ public class Lesson {
     private LocalDate dataLezione;
     private LocalTime oraInizio;
     private LocalTime oraFine;
-    private int livelloCorso;
+    private Level livelloCorso;
     private int corso;
 
-    public Lesson(String insegnante, LocalDate dataLezione, LocalTime oraInizio, LocalTime oraFine, int livelloCorso, int corso) {
+    public Lesson(String insegnante, LocalDate dataLezione, LocalTime oraInizio, LocalTime oraFine, Level livelloCorso, int corso) {
         this.insegnante = insegnante;
         this.dataLezione = dataLezione;
         this.oraInizio = oraInizio;
@@ -36,11 +36,17 @@ public class Lesson {
         return this.oraFine;
     }
 
-    public int getLivelloCorso() {
+    public Level getLivelloCorso() {
         return this.livelloCorso;
     }
 
     public int getCorso() {
         return this.corso;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.insegnante).append(" ").append(this.dataLezione).append(" ").append(this.oraInizio).append(" ").append(this.oraFine).append(" ").append(this.livelloCorso.name()).append(" ").append(this.corso).append('\n');
+        return sb.toString();
     }
 }

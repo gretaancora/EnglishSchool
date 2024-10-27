@@ -7,7 +7,7 @@ public enum Role {
 
     private final int id;
 
-    private Role(int id) {
+    Role(int id) {
         this.id = id;
     }
 

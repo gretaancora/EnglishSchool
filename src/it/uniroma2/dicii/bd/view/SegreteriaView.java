@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -19,113 +20,231 @@ public class SegreteriaView {
         System.out.println("2) Add lesson");
         System.out.println("3) Add teacher");
         System.out.println("4) Add student");
-        System.out.println("5) List student courses");
+        System.out.println("5) Assign course");
         System.out.println("6) Enroll student");
-        System.out.println("7) Records absence");
-        System.out.println("8) List active courses");
-        System.out.println("9) Update end of the course");
-        System.out.println("10) Teacher lessons Report");
-        System.out.println("11) Lessons Report");
-        System.out.println("12) Quit");
+        System.out.println("7) Record absence");
+        System.out.println("8) Get course info");
+        System.out.println("9) Get teacher info");
+        System.out.println("10) Get student info");
+        System.out.println("11) Get student absences");
+        System.out.println("12) Get student enrollments");
+        System.out.println("13) Get course lessons");
+        System.out.println("14) Get teacher courses");
+        System.out.println("15) Update end of the course");
+        System.out.println("16) Teacher lessons Report");
+        System.out.println("17) Lessons Report");
+        System.out.println("18) Courses list");
+        System.out.println("19) Teacher list");
+        System.out.println("20) Student list");
+        System.out.println("21) Get course students");
+        System.out.println("22) Level list");
+        System.out.println("23) Quit");
 
 
         Scanner input = new Scanner(System.in);
-        int choice = 0;
+        int choice;
         while (true) {
-            System.out.print("Please enter your choice: ");
-            choice = input.nextInt();
-            if (choice >= 1 && choice <= 12) {
-                break;
+            try {
+                System.out.print("Please enter your choice: ");
+                choice = input.nextInt();
+                input.nextLine();
+                if (choice >= 1 && choice <= 23) {
+                    break;
+                }
+                System.out.println("Invalid option");
+            } catch (InputMismatchException e) {
+                input.nextLine();
+                System.out.println("Invalid choice");
+            } catch (NoSuchElementException e) {
+                System.out.println("Invalid choice");
             }
-            System.out.println("Invalid option");
         }
-
         return choice;
     }
 
-    public static int getLevel(Scanner input) {
-        int livello = 0;
+    public static Level getLevel(Scanner input) {
+        int livello;
 
         System.out.println("Choose course level: ");
-        System.out.println("1) C-KET");
-        System.out.println("2) C-PET");
-        System.out.println("3) C-FCE");
-        System.out.println("4) C-CAE");
-        System.out.println("5) C-CPE");
+        System.out.println("1) A1");
+        System.out.println("2) A2");
+        System.out.println("3) B1");
+        System.out.println("4) B2");
+        System.out.println("5) C1");
+        System.out.println("6) C2");
 
         while (true) {
-            System.out.print("Please enter your choice: ");
-            livello = input.nextInt();
-            if (livello >= 1 && livello <= 5) {
-                break;
+            try {
+                System.out.print("Please enter your choice: ");
+                livello = input.nextInt();
+                input.nextLine();
+                if (livello >= 1 && livello <= 6) {
+                    break;
+                }
+                System.out.println("Invalid option");
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid option");
+                input.nextLine();
+            } catch (NoSuchElementException e) {
+                System.out.println("Invalid choice");
             }
-            System.out.println("Invalid option");
         }
-        return livello;
+        return Level.fromInt(livello);
     }
 
-    public static Course getCourseInfo() {
-        int livello = 0;
+    public static LocalDate getDate(Scanner input, String msg) {
         int day;
         int month;
         int year;
+        LocalDate data;
+
+        System.out.println(msg);
+        while (true){
+            try {
+                while (true) {
+                    try {
+                        System.out.println("Insert day (1 to 31): ");
+                        day = input.nextInt();
+                        input.nextLine();
+                        break;
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid day");
+                        input.nextLine();
+                    } catch (NoSuchElementException e) {
+                        System.out.println("Invalid choice");
+                    }
+                }
+                while (true) {
+                    try {
+                        System.out.println("Insert month (1 to 12): ");
+                        month = input.nextInt();
+                        input.nextLine();
+                        break;
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid month");
+                        input.nextLine();
+                    } catch (NoSuchElementException e) {
+                        System.out.println("Invalid choice");
+                    }
+                }
+                while (true) {
+                    try {
+                        System.out.println("Insert year (ex_ 2024): ");
+                        year = input.nextInt();
+                        input.nextLine();
+                        break;
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid year");
+                        input.nextLine();
+                    } catch (NoSuchElementException e) {
+                        System.out.println("Invalid choice");
+                    }
+                }
+                data = LocalDate.of(year, month, day);
+            } catch (DateTimeException e) {
+                System.out.println("Invalid date");
+                continue;
+            }
+            break;
+        }
+        return data;
+    }
+
+    public static short getShort(Scanner input, String msg){
+        short i;
+
+        System.out.println(msg);
+        while (true) {
+            try {
+                i = input.nextShort();
+                input.nextLine();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input");
+                input.nextLine();
+            } catch (NoSuchElementException e) {
+                System.out.println("Invalid choice");
+            }
+        }
+        return i;
+    }
+
+    public static LocalTime getTime(Scanner input, String msg){
+        int hour;
+        int minute;
+        LocalTime ora;
+
+        System.out.println(msg);
+        while (true){
+            try {
+                while (true) {
+                    try {
+                        System.out.println("Insert hour (0 to 23): ");
+                        hour = input.nextInt();
+                        input.nextLine();
+                        break;
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid hour");
+                        input.nextLine();
+                    } catch (NoSuchElementException e) {
+                        System.out.println("Invalid choice");
+                    }
+                }
+                while (true) {
+                    try {
+                        System.out.println("Insert minute (0 to 59): ");
+                        minute = input.nextInt();
+                        input.nextLine();
+                        break;
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid minute");
+                        input.nextLine();
+                    } catch (NoSuchElementException e) {
+                        System.out.println("Invalid choice");
+                    }
+                }
+                ora = LocalTime.of(hour, minute);
+            } catch (DateTimeException e) {
+                System.out.println("Invalid time");
+                continue;
+            }
+            break;
+        }
+        return ora;
+    }
+
+    public static String getString(Scanner input, String msg){
+        System.out.println(msg);
+        String str = input.nextLine();
+        return str;
+    }
+
+    public static Course getCourseInfo() {
+        Level livello;
         LocalDate dataInizio;
         LocalDate dataFine;
 
         Scanner input  = new Scanner(System.in);
 
-        System.out.println("Choose course level: ");
-        System.out.println("1) C-KET");
-        System.out.println("2) C-PET");
-        System.out.println("3) C-FCE");
-        System.out.println("4) C-CAE");
-        System.out.println("5) C-CPE");
-
-        while (true) {
-            System.out.print("Please enter your choice: ");
-            livello = input.nextInt();
-            if (livello >= 1 && livello <= 5) {
-                break;
-            }
-            System.out.println("Invalid option");
-        }
-
-        System.out.println("Insert start date");
-        while (true){
-            try {
-                System.out.println("Insert day: ");
-                day = input.nextInt();
-                System.out.println("Insert month: ");
-                month = input.nextInt();
-                System.out.println("Insert year: ");
-                year = input.nextInt();
-                dataInizio = LocalDate.of(year, month, day);
-            } catch (DateTimeException e) {
-                System.out.println("Invalid date");
-                continue;
-            }
-            break;
-        }
-
-        System.out.println("Insert end date");
-        while (true){
-            try {
-                System.out.println("Insert day: ");
-                day = input.nextInt();
-                System.out.println("Insert month: ");
-                month = input.nextInt();
-                System.out.println("Insert year: ");
-                year = input.nextInt();
-                dataFine = LocalDate.of(year, month, day);
-            } catch (DateTimeException e) {
-                System.out.println("Invalid date");
-                continue;
-            }
-            break;
-        }
+        livello = getLevel(input);
+        dataInizio = getDate(input, "Insert start date: ");
+        dataFine = getDate(input, "Insert end date: ");
 
         return new Course(livello, dataInizio, dataFine);
+    }
 
+    public static Course getUpdateCourseInfo(){
+        Level livello;
+        short idCorso;
+        LocalDate newDate;
+
+        Scanner input = new Scanner(System.in);
+
+        livello = getLevel(input);
+        idCorso = getShort(input, "Insert course id: ");
+        newDate = getDate(input, "Insert new end date: ");
+
+        return new Course(livello, idCorso, newDate);
     }
 
     public static Lesson getLessonInfo(){
@@ -133,53 +252,57 @@ public class SegreteriaView {
         LocalDate dataLezione;
         LocalTime oraInizio;
         LocalTime oraFine;
-        int livelloCorso;
+        Level livelloCorso;
         int corso;
-        int day;
-        int month;
-        int year;
-        int hour;
-        int minute;
 
         Scanner input  = new Scanner(System.in);
 
-        System.out.println("Choose course level: ");
-        System.out.println("1) C-KET");
-        System.out.println("2) C-PET");
-        System.out.println("3) C-FCE");
-        System.out.println("4) C-CAE");
-        System.out.println("5) C-CPE");
+        livelloCorso = getLevel(input);
+        corso = getShort(input, "Insert course id: ");
+        dataLezione = getDate(input, "Insert lesson date: ");
+        oraInizio = getTime(input, "Insert start time: ");
+        oraFine = getTime(input, "Insert end time: ");
+        insegnante = getString(input, "Insert teacher id: ");
 
-        while (true) {
-            System.out.print("Please enter your choice: ");
-            livelloCorso = input.nextInt();
-            if (livelloCorso >= 1 && livelloCorso <= 5) {
-                break;
-            }
-            System.out.println("Invalid option");
-        }
+        return new Lesson(insegnante, dataLezione, oraInizio, oraFine, livelloCorso, corso);
+    }
 
-        System.out.println("Insert course id: ");
-        while (true) {
-            try {
-                corso = input.nextInt();
-            } catch (NoSuchElementException e) {
-                System.out.println("Invalid id");
-                continue;
-            }
-            break;
-        }
+    public static LocalDate getLessonsDateInfo(){
+        Scanner input = new Scanner(System.in);
 
-        System.out.println("Insert lesson date");
+        LocalDate data;
+        int month;
+        int year;
+
         while (true){
             try {
-                System.out.println("Insert day: ");
-                day = input.nextInt();
-                System.out.println("Insert month: ");
-                month = input.nextInt();
-                System.out.println("Insert year: ");
-                year = input.nextInt();
-                dataLezione = LocalDate.of(year, month, day);
+                while (true) {
+                    try {
+                        System.out.println("Insert month (1 to 12): ");
+                        month = input.nextInt();
+                        input.nextLine();
+                        break;
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid month");
+                        input.nextLine();
+                    } catch (NoSuchElementException e) {
+                        System.out.println("Invalid choice");
+                    }
+                }
+                while (true) {
+                    try {
+                        System.out.println("Insert year (es_ 2024): ");
+                        year = input.nextInt();
+                        input.nextLine();
+                        break;
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid year");
+                        input.nextLine();
+                    } catch (NoSuchElementException e) {
+                        System.out.println("Invalid choice");
+                    }
+                }
+                data = LocalDate.of(year, month, 1);
             } catch (DateTimeException e) {
                 System.out.println("Invalid date");
                 continue;
@@ -187,49 +310,7 @@ public class SegreteriaView {
             break;
         }
 
-        System.out.println("Insert start time");
-        while (true){
-            try {
-                System.out.println("Insert hour: ");
-                hour = input.nextInt();
-                System.out.println("Insert minute: ");
-                minute = input.nextInt();
-                oraInizio = LocalTime.of(hour, minute);
-            } catch (DateTimeException e) {
-                System.out.println("Invalid start time");
-                continue;
-            }
-            break;
-        }
-
-        System.out.println("Insert end time");
-        while (true){
-            try {
-                System.out.println("Insert hour: ");
-                hour = input.nextInt();
-                System.out.println("Insert minute: ");
-                minute = input.nextInt();
-                oraFine = LocalTime.of(hour, minute);
-            } catch (DateTimeException e) {
-                System.out.println("Invalid start time");
-                continue;
-            }
-            break;
-        }
-
-        System.out.println("Insert teacher id: ");
-        while (true) {
-            try {
-                insegnante = input.nextLine();
-            } catch (NoSuchElementException e) {
-                System.out.println("Invalid id");
-                continue;
-            }
-            break;
-        }
-
-        return new Lesson(insegnante, dataLezione, oraInizio, oraFine, livelloCorso, corso);
-
+        return data;
     }
 
     public static Teacher getTeacherInfo(){
@@ -241,63 +322,21 @@ public class SegreteriaView {
 
         Scanner input  = new Scanner(System.in);
 
-        System.out.println("Insert name: ");
-        while (true) {
-            try {
-                nome = input.nextLine();
-            } catch (NoSuchElementException e) {
-                System.out.println("Invalid name");
-                continue;
-            }
-            break;
-        }
-
-        System.out.println("Insert surname: ");
-        while (true) {
-            try {
-                cognome = input.nextLine();
-            } catch (NoSuchElementException e) {
-                System.out.println("Invalid surname");
-                continue;
-            }
-            break;
-        }
-
-        System.out.println("Insert address: ");
-        while (true) {
-            try {
-                indirizzo = input.nextLine();
-            } catch (NoSuchElementException e) {
-                System.out.println("Invalid address");
-                continue;
-            }
-            break;
-        }
-
-        System.out.println("Insert mail: ");
-        while (true) {
-            try {
-                mail = input.nextLine();
-            } catch (NoSuchElementException e) {
-                System.out.println("Invalid mail");
-                continue;
-            }
-            break;
-        }
-
-        System.out.println("Insert nation: ");
-        while (true) {
-            try {
-                nazione = input.nextLine();
-            } catch (NoSuchElementException e) {
-                System.out.println("Invalid Address");
-                continue;
-            }
-            break;
-        }
+        nome = getString(input, "Insert teacher name: ");
+        cognome = getString(input, "Insert teacher surname: ");
+        indirizzo = getString(input, "Insert teacher address: ");
+        mail = getString(input, "Insert teacher mail: ");
+        nazione = getString(input, "Insert teacher nation: ");
 
         return new Teacher(nome, cognome, indirizzo, mail, nazione);
     }
+
+    public static String getId(String msg) {
+        Scanner input  = new Scanner(System.in);
+
+        return getString(input, msg);
+    }
+
 
     public static Student getStudentInfo(){
         String nome;
@@ -308,131 +347,56 @@ public class SegreteriaView {
 
         Scanner input  = new Scanner(System.in);
 
-        System.out.println("Insert name: ");
-        while (true) {
-            try {
-                nome = input.nextLine();
-            } catch (NoSuchElementException e) {
-                System.out.println("Invalid name");
-                continue;
-            }
-            break;
-        }
-
-        System.out.println("Insert surname: ");
-        while (true) {
-            try {
-                cognome = input.nextLine();
-            } catch (NoSuchElementException e) {
-                System.out.println("Invalid surname");
-                continue;
-            }
-            break;
-        }
-
-        System.out.println("Insert address: ");
-        while (true) {
-            try {
-                indirizzo = input.nextLine();
-            } catch (NoSuchElementException e) {
-                System.out.println("Invalid address");
-                continue;
-            }
-            break;
-        }
-
-        System.out.println("Insert mail: ");
-        while (true) {
-            try {
-                mail = input.nextLine();
-            } catch (NoSuchElementException e) {
-                System.out.println("Invalid mail");
-                continue;
-            }
-            break;
-        }
-
-        System.out.println("Insert phone number: ");
-        while (true) {
-            try {
-                telefono = input.nextLine();
-            } catch (NoSuchElementException e) {
-                System.out.println("Invalid phone number");
-                continue;
-            }
-            break;
-        }
+        nome = getString(input, "Insert student name: ");
+        cognome = getString(input, "Insert student surname: ");
+        indirizzo = getString(input, "Insert student address: ");
+        mail = getString(input, "Insert student mail: ");
+        telefono = getString(input, "Insert student phone number: ");
 
         return new Student(nome, cognome, indirizzo, mail, telefono);
     }
 
-    public static Enrollment getEnrollmentInfo(){
+    public static Enrollment getEnrollmentInfo() {
         String studente;
-        int livelloCorso;
+        Level livelloCorso;
         int corso;
         LocalDate dataIscrizione;
-        int day;
-        int month;
-        int year;
 
         Scanner input  = new Scanner(System.in);
 
-        System.out.println("Insert student id: ");
-        while (true) {
-            try {
-                studente = input.nextLine();
-            } catch (NoSuchElementException e) {
-                System.out.println("Invalid id");
-                continue;
-            }
-            break;
-        }
-
-        System.out.println("Choose course level: ");
-        System.out.println("1) C-KET");
-        System.out.println("2) C-PET");
-        System.out.println("3) C-FCE");
-        System.out.println("4) C-CAE");
-        System.out.println("5) C-CPE");
-
-        while (true) {
-            System.out.print("Please enter your choice: ");
-            livelloCorso = input.nextInt();
-            if (livelloCorso >= 1 && livelloCorso <= 5) {
-                break;
-            }
-            System.out.println("Invalid option");
-        }
-
-        System.out.println("Insert course id: ");
-        while (true) {
-            try {
-                corso = input.nextInt();
-            } catch (NoSuchElementException e) {
-                System.out.println("Invalid id");
-                continue;
-            }
-            break;
-        }
-
-        System.out.println("Insert enrollment date");
-        while (true){
-            try {
-                System.out.println("Insert day: ");
-                day = input.nextInt();
-                System.out.println("Insert month: ");
-                month = input.nextInt();
-                System.out.println("Insert year: ");
-                year = input.nextInt();
-                dataIscrizione = LocalDate.of(year, month, day);
-            } catch (DateTimeException e) {
-                System.out.println("Invalid date");
-                continue;
-            }
-            break;
-        }
+        studente = getString(input, "Insert student id: ");
+        livelloCorso = getLevel(input);
+        corso = getShort(input, "Insert course id: ");
+        dataIscrizione = getDate(input, "Insert enrollment date: ");
 
         return new Enrollment(studente, livelloCorso, corso, dataIscrizione);
     }
 
+    public static Absence getAbsenceInfo() {
+        String idStudente;
+        String idInsegnante;
+        LocalDate dataLezione;
+        LocalTime oraInizioLezione;
+
+        Scanner input = new Scanner(System.in);
+
+        idStudente = getString(input, "Insert student id: ");
+        idInsegnante = getString(input, "Insert teacher id: ");
+        dataLezione = getDate(input, "Insert lesson date: ");
+        oraInizioLezione = getTime(input, "Insert lesson start time: ");
+
+        return new Absence(idStudente, idInsegnante, dataLezione, oraInizioLezione);
+    }
+
+    public static Course getCourseId(){
+        Level livello;
+        short corso;
+
+        Scanner input = new Scanner(System.in);
+
+        livello = getLevel(input);
+        corso = getShort(input, "Insert course id: ");
+
+        return new Course(livello, corso);
+    }
 }

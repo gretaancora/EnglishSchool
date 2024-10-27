@@ -12,9 +12,9 @@ public class EnrollmentProcedureDAO implements GenericProcedureDAO {
 
         try {
             Connection conn = ConnectionFactory.getConnection();
-            CallableStatement cs = conn.prepareCall("{call registra_iscrizione(?,?,?,?,?)}");
+            CallableStatement cs = conn.prepareCall("{call registra_iscrizione(?,?,?,?)}");
             cs.setString(1, enrollment.getStudente());
-            cs.setInt(2, enrollment.getLivelloCorso());
+            cs.setString(2, enrollment.getLivelloCorso().name());
             cs.setInt(3, enrollment.getCorso());
             cs.setDate(4, Date.valueOf(enrollment.getDataIscrizione()));
             cs.executeQuery();

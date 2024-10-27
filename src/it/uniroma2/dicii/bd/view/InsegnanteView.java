@@ -1,6 +1,8 @@
 package it.uniroma2.dicii.bd.view;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class InsegnanteView {
@@ -15,16 +17,23 @@ public class InsegnanteView {
 
 
         Scanner input = new Scanner(System.in);
-        int choice = 0;
+        int choice;
         while (true) {
-            System.out.print("Please enter your choice: ");
-            choice = input.nextInt();
-            if (choice >= 1 && choice <= 3) {
-                break;
+            try {
+                System.out.print("Please enter your choice: ");
+                choice = input.nextInt();
+                input.nextLine();
+                if (choice >= 1 && choice <= 3) {
+                    break;
+                }
+                System.out.println("Invalid option");
+            } catch (InputMismatchException e) {
+                input.nextLine();
+                System.out.println("Invalid choice");
+            } catch (NoSuchElementException e) {
+                System.out.println("Invalid choice");
             }
-            System.out.println("Invalid option");
         }
-
         return choice;
     }
 }
