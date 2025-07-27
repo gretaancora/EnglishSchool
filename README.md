@@ -1,1 +1,1 @@
-This is a project for the database exam of the University of Rome "Tor Vergata".
+This repository contains the final project for the course of Database of the University of Rome Tor Vergata (faculty Computer Engineering).
